@@ -10,9 +10,10 @@ sequenceDiagram
     deactivate server
 
     broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
-    broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     activate server
-    server-->browser: 200 OK: returns spa.js, main.css
+    server-->browser: 200 OK: returns spa.js
+    broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    server-->browser: 200 OK: returns main.css
     deactivate server
 
     browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/data.json
