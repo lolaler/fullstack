@@ -3,16 +3,15 @@ sequenceDiagram
     participant browser
     participant server
 
-
-    broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa
     activate server
     server-->browser: 200 OK: serve HTML document
     deactivate server
 
-    broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/spa.js
     activate server
     server-->browser: 200 OK: returns spa.js
-    broswer->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
+    browser->>server: GET https://studies.cs.helsinki.fi/exampleapp/main.css
     server-->browser: 200 OK: returns main.css
     deactivate server
 
