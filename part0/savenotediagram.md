@@ -7,7 +7,7 @@ sequenceDiagram
 
     user->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
     activate server
-    server-->user: 302 Found
+    server-->>user: 302 Found
     deactivate server
 
     user->>server: GET https://studies.cs.helsinki.fi/exampleapp/notes
