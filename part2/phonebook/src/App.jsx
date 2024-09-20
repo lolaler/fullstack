@@ -1,17 +1,21 @@
 import { useState } from 'react'
-import Person from './components/Person.jsx'
+import Persons from './components/Persons.jsx'
+import PersonForm from './components/PersonForm.jsx'
+import Filter from './components/Filter.jsx'
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { id: 1, name: 'Arto Hellas' }
-  ]) 
-
+  console.log("test?")
+  const [persons, setPersons] = useState([]) 
   const [newName, setNewName] = useState('')
   const [newPhone, setNewPhone] = useState('')
   const [newSearch, setNewSearch] = useState('')
 
+  console.log("test?2")
+
   const addPerson = (event) => {
     event.preventDefault()
+    console.log("test?3")
+
     if (persons.some(person => person.name === newName)) {
       return (
         alert(`${newName} is already added to phonebook`)
@@ -34,6 +38,7 @@ const App = () => {
   const handlePhoneChange = (event) => {
     console.log(event.target.value)
     setNewPhone(event.target.value)
+  }
 
   const handleSearchChange = (event) => {
     console.log(event.target.value)
@@ -41,27 +46,23 @@ const App = () => {
   }
 
 
+  console.log("running?3")
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with <input 
-                            value={newSearch}
-                            onChange={handleSearchChange}
-                            />
-      </div>
-      <h1>add a new</h1>
-      <PersonForm />
+        <Filter search={newSearch} handleSearchChange={handleSearchChange}/>
+
+      <h1>Add a new</h1>
+      <PersonForm addPerson          = {addPerson} 
+                  newName            = {newName} 
+                  handleNameChange   = {handleNameChange}
+                  newPhone           = {newPhone} 
+                  handlePhoneChange  = {handlePhoneChange}/>
+
       <h2>Numbers</h2>
-        <Filter persons={persons} />
-        {persons.filter(person => person
-                                  .name
-                                  .toLowerCase()
-                                  .includes(newSearch.toLowerCase()))
-                                  .map(person =>
-            <Person key={person.id} person={person} />
-        )
-      }
+      <Persons persons={persons} search={newSearch} />
+
     </div>
   )
 }

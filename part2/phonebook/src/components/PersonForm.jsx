@@ -1,38 +1,6 @@
-const PersonForm = (props) => {
-    const [persons, setPersons] = useState([
-        { id: 1, name: 'Arto Hellas' }
-      ]) 
-    
-      const [newName, setNewName] = useState('')
-      const [newPhone, setNewPhone] = useState('')
-      const [newSearch, setNewSearch] = useState('')
-    
-      const addPerson = (event) => {
-        event.preventDefault()
-        if (persons.some(person => person.name === newName)) {
-          return (
-            alert(`${newName} is already added to phonebook`)
-          )
-        }
-        const personObject = {
-          name: newName,
-          phone: newPhone,
-          id: String(persons.length + 1)
-        }
-        setPersons (persons.concat(personObject))
-        setNewName('')
-        setNewPhone('')
-      }
-    
-      const handleNameChange = (event) => {
-        console.log(event.target.value)
-        setNewName(event.target.value)
-      }
-      const handlePhoneChange = (event) => {
-        console.log(event.target.value)
-        setNewPhone(event.target.value)
-      }
-
+const PersonForm = ({ addPerson, newName, handleNameChange, newPhone, handlePhoneChange }) => {
+  console.log("personform forming")  
+  return (
     <form onSubmit={addPerson}>
     <div>
       name:<input 
@@ -45,6 +13,7 @@ const PersonForm = (props) => {
       <button type="submit">add</button>
     </div>
   </form>
+    )
 }
 
 export default PersonForm
