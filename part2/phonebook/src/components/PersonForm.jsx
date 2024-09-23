@@ -1,4 +1,4 @@
-const PersonForm = ({ addPerson, newName, handleNameChange, newPhone, handlePhoneChange }) => {
+const PersonForm = ({ addPerson, newName, handleNameChange, newNumber, handleNumberChange }) => {
   console.log("personform forming")  
   return (
     <form onSubmit={addPerson}>
@@ -8,8 +8,8 @@ const PersonForm = ({ addPerson, newName, handleNameChange, newPhone, handlePhon
         onChange={handleNameChange}
       />
       number: <input 
-        value={newPhone}
-        onChange={handlePhoneChange}/>
+        value={newNumber}
+        onChange={handleNumberChange}/>
       <button type="submit">add</button>
     </div>
   </form>
