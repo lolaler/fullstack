@@ -44,12 +44,14 @@ blogsRouter.get('/:id', async (request, response) => {
   }
 })
 
-blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) => {
+blogsRouter.delete('/:id', [middleware.tokenExtractor, middleware.userExtractor], async (request, response) => {
   const user = request.user
   const blogToDelete = await Blog.findById(request.params.id)
+  console.log('user info: ', user)
+  console.log('blogtoDelete info: ', blogToDelete)
 
   if (blogToDelete) {
-    if ( blogToDelete.user.toString() === user.id.toString() ) {
+    if ( blogToDelete.user.toString() === user._id.toString() ) {
       await Blog.findByIdAndDelete(request.params.id)
       response.status(204).end()
     } else {

@@ -13,17 +13,21 @@ const requestLogger = (request, response, next) => {
 
 
 const tokenExtractor = (request, response, next) => {
+  console.log('extracting token')
   const authorization = request.get('authorization')
   const token = authorization && authorization.startsWith('Bearer ') ? authorization.replace('Bearer ', '') : null
+  console.log('tokenExtractor: found token ', token)
   request.token = token
   next()
 }
 
 const userExtractor = async (request, response, next) => {
+  console.log('extracting user')
   const token = request.token
   const decodedToken = jwt.verify(token, process.env.SECRET)
   const user = await User.findById(decodedToken.id)
   if (user) {
+    console.log('userExtractor: found user ', user)
     request.user = user
   } else {
     response.status(404).json({ error: 'user not found' })
