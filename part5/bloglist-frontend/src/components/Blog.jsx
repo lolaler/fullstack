@@ -1,4 +1,4 @@
-const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog }) => {
+const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog, addLike }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -6,26 +6,28 @@ const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  const blogpostUser = blog.user[0]?.username ? blog.user[0].username : 'unknown user'
+
+  const blogWithUser = blog.user.length === 0 ? {...blog, user: [{username: 'unknown user'}]} : blog
 
   return (
-  <div style={blogStyle}>
-    <p>{blog?.title} {blog?.author}</p>
-    {isVisible && (
-      <div key={blog.id}>
-      <p>url: {blog?.url}</p>
-      <p>user: {blogpostUser}</p>
-      <p>likes: {blog?.likes}</p>
-      {user.username === blogpostUser && (
-        <button onClick={deleteBlog}>remove</button>
+    <div style={blogStyle}>
+      <p className='title'>{blog?.title} </p><p className='author'>{blog?.author} </p>
+      {isVisible && (
+        <div key={blog.id}>
+          <p className='url'>url: {blog?.url}</p>
+          <p>user: {blogWithUser.user[0].username}</p>
+          <p className='likes'>likes: {blog?.likes}</p>
+          <button onClick={ () => addLike(blog) }>like</button>
+          {user.username === blogWithUser.user[0].username && (
+            <button onClick={deleteBlog}>remove</button>
+          )}
+        </div>
       )}
-      </div>
-    )}
-    <button onClick={toggleBlogVisibility}>
-      {isVisible ? 'hide' : 'view'}
-    </button>
-  </div> 
-  ) 
+      <button onClick={toggleBlogVisibility}>
+        {isVisible ? 'hide' : 'view'}
+      </button>
+    </div>
+  )
 }
 
 export default Blog

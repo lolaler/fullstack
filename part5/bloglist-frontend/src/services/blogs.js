@@ -15,7 +15,7 @@ const getAll = () => {
 
 const create = async newObject => {
   const config = {
-    headers: { Authorization: token}
+    headers: { Authorization: token }
   }
 
   const response = await axios.post(baseUrl, newObject, config)
@@ -27,7 +27,7 @@ const likePost = async blog => {
   const config = {
     headers: { Authorization: token }
   }
-  const response = await axios.put(`${baseUrl}/${blog.id}`, {title: blog.title, author: blog.author, url: blog.url}, config)
+  const response = await axios.put(`${baseUrl}/${blog.id}`, { title: blog.title, author: blog.author, url: blog.url }, config)
   return response.data
 }
 

@@ -15,7 +15,7 @@ const App = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [message, setMessage] = useState(null)
-  const [notificationType, setNotificationType] = useState('');
+  const [notificationType, setNotificationType] = useState('')
   const [loginVisible, setLoginVisible] = useState(false)
   const [visibleBlogs, setVisibleBlogs] = useState({})
 
@@ -26,7 +26,7 @@ const App = () => {
       const sortedBlogs = blogs.sort((a, b) => b.likes - a.likes)
       setBlogs( sortedBlogs )
     }
-    )  
+    )
   }, [])
 
   useEffect(() => {
@@ -56,35 +56,36 @@ const App = () => {
 
   const addLike = (blog) => {
     console.log('blogpost was liked, amt likes in beginning: ', blog.likes)
+    console.log('blogpost object: ', blog)
     blogService
       .likePost(blog)
       .then(returnedBlog => {
+        const updatedBlog = { ...returnedBlog, user: blog.user }
         setMessage(`blogpost with title ${blog.title} liked successfully`)
         setNotificationType('success')
         setTimeout(() => { setMessage(null) }, 5000)
-        setBlogs(preLikedBlogs => 
-              preLikedBlogs.map(post => 
-                post.id === returnedBlog.id ? returnedBlog : post))
-        console.log('new amount of likes: ', returnedBlog.likes)
-        console.log('title of liked blogpost: ', returnedBlog.title)
-        console.log(blogs[0])
-    })}
+        setBlogs(preLikedBlogs =>
+          preLikedBlogs.map(post =>
+            post.id === updatedBlog.id ? updatedBlog : post))
+        console.log('new amount of likes: ', updatedBlog.likes)
+        console.log('title of liked blogpost: ', updatedBlog.title)
+      })
+  }
 
-    const deleteBlog = (blog) => {
-      console.log('attempting to delete blogpost')
-      if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
-        blogService
+  const deleteBlog = (blog) => {
+    console.log('attempting to delete blogpost')
+    if (window.confirm(`Remove ${blog.title} ${blog.author}?`)) {
+      blogService
         .deleteBlog(blog.id)
         .then(response => {
           console.log(response)
-          setBlogs(blogs.filter(post => post.id != blog.id))
+          setBlogs(blogs.filter(post => post.id !== blog.id))
           setMessage(`blogpost with title ${blog.title} deleted successfully`)
           setNotificationType('success')
           setTimeout(() => { setMessage(null) }, 5000)
         })
-      }
     }
-
+  }
 
   const handleLogin = async (event) => {
     console.log('handling login')
@@ -92,9 +93,7 @@ const App = () => {
 
     try {
       const user = await loginService.login({ username, password })
-      window.localStorage.setItem(
-        'loggedBlogslistUser', JSON.stringify(user)
-      ) 
+      window.localStorage.setItem('loggedBlogslistUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       setUsername('')
@@ -152,33 +151,32 @@ const App = () => {
         {loginForm()}
       </div>
     )
-  } 
-
+  }
 
   return (
     <div>
-        <h2>blogs</h2>
-        <Notification message={message} type={notificationType}/>
-        <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
+      <h2 className='header'>blogs</h2>
+      <Notification message={message} type={notificationType}/>
+      <p>{user.name} logged in <button onClick={handleLogout}>logout</button></p>
 
-        <h2>create new</h2>
-        <Togglable buttonLabel="create new blog" ref={blogFormRef}>
-          <BlogForm createBlog={addBlog}/>
-        </Togglable>
+      <h2>create new</h2>
+      <Togglable buttonLabel="create new blog" ref={blogFormRef}>
+        <BlogForm createBlog={addBlog}/>
+      </Togglable>
 
-        {blogs.map(blog =>
-          <div key={blog.id}>
-            <ul><Blog 
-              blog={blog}
-              user={user}
-              isVisible={visibleBlogs[blog.id]}
-              toggleBlogVisibility={() => toggleBlogVisibility(blog.id)}
-              deleteBlog={() => deleteBlog(blog)}
-            />
-            <button onClick={ () => addLike(blog)}>like</button>
-            </ul>
-          </div>
-        )}
+      {blogs.map(blog =>
+        <div key={blog.id}>
+          <ul className='blog'><Blog
+            blog={blog}
+            user={user}
+            isVisible={visibleBlogs[blog.id]}
+            toggleBlogVisibility={() => toggleBlogVisibility(blog.id)}
+            deleteBlog={() => deleteBlog(blog)}
+            addLike={ () => addLike(blog) }
+          />
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
