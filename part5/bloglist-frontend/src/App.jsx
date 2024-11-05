@@ -125,10 +125,10 @@ const App = () => {
 
     return (
       <div>
-        <div style={hideWhenVisible}>
+        {/* <div style={hideWhenVisible}>
           <button onClick={() => setLoginVisible(true)}>log in</button>
-        </div>
-        <div style={showWhenVisible}>
+        </div> */}
+        <div>
           <h1>Log in to application</h1>
           <Notification message={message} notificationType={notificationType} />
           <LoginForm
@@ -138,7 +138,7 @@ const App = () => {
             handlePasswordChange={({ target }) => setPassword(target.value)}
             handleSubmit={handleLogin}
           />
-          <button onClick={() => setLoginVisible(false)}>cancel</button>
+          {/* <button onClick={() => setLoginVisible(false)}>cancel</button> */}
         </div>
       </div>
     )

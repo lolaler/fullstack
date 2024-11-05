@@ -9,7 +9,7 @@ test('blog author and title are visible by default, while URL and likes are NOT'
     title: 'vitest test title',
     author: 'vitest author',
     url: 'vitest url',
-    user: [{username: 'someuser'}]
+    user: [{ username: 'someuser' }]
   }
 
   const user = [{
@@ -39,53 +39,53 @@ test('blog author and title are visible by default, while URL and likes are NOT'
 })
 
 test('URL and likes are shown when view button has been clicked', async () => {
-    const blog = {
-      title: 'vitest test title',
-      author: 'vitest author',
-      url: 'vitest url',
-      user: [{username: 'someuser'}]
-    }
-  
-    const user = [{
-      username: 'otheruser',
-      dummyfield: 'test'
-    }]
-
-    const toggleBlogVisibility = vi.fn()
-    const isVisible = false
-    const deleteBlog = vi.fn()
-  
-    // const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog }) => {
-  
-    render(<Blog
-      blog={blog}
-      user={user}
-      toggleBlogVisibility={toggleBlogVisibility}
-      isVisible={isVisible}
-      deleteBlog={deleteBlog}/>
-    )
-
-    const botUser = userEvent.setup()
-    const button = screen.getByText('view')
-    await botUser.click(button)
-    
-    screen.debug()
-  
-    expect(screen.queryByText('url: vitest url'))
-    expect(screen.queryByText('likes: 0'))
-  })
-
-test('if like button is pressed twice, event handler is called twice', async () => {
   const blog = {
-      title: 'vitest test title',
-      author: 'vitest author',
-      url: 'vitest url',
-      user: [{username: 'someuser'}]
+    title: 'vitest test title',
+    author: 'vitest author',
+    url: 'vitest url',
+    user: [{ username: 'someuser' }]
   }
 
   const user = [{
-      username: 'otheruser',
-      dummyfield: 'test'
+    username: 'otheruser',
+    dummyfield: 'test'
+  }]
+
+  const toggleBlogVisibility = vi.fn()
+  const isVisible = false
+  const deleteBlog = vi.fn()
+
+  // const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog }) => {
+
+  render(<Blog
+    blog={blog}
+    user={user}
+    toggleBlogVisibility={toggleBlogVisibility}
+    isVisible={isVisible}
+    deleteBlog={deleteBlog}/>
+  )
+
+  const botUser = userEvent.setup()
+  const button = screen.getByText('view')
+  await botUser.click(button)
+
+  screen.debug()
+
+  expect(screen.queryByText('url: vitest url'))
+  expect(screen.queryByText('likes: 0'))
+})
+
+test('if like button is pressed twice, event handler is called twice', async () => {
+  const blog = {
+    title: 'vitest test title',
+    author: 'vitest author',
+    url: 'vitest url',
+    user: [{ username: 'someuser' }]
+  }
+
+  const user = [{
+    username: 'otheruser',
+    dummyfield: 'test'
   }]
 
   const toggleBlogVisibility = vi.fn()
@@ -96,12 +96,12 @@ test('if like button is pressed twice, event handler is called twice', async () 
   // const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog }) => {
 
   render(<Blog
-      blog={blog}
-      user={user}
-      toggleBlogVisibility={toggleBlogVisibility}
-      isVisible={isVisible}
-      deleteBlog={deleteBlog}
-      addLike={mockLike}/>
+    blog={blog}
+    user={user}
+    toggleBlogVisibility={toggleBlogVisibility}
+    isVisible={isVisible}
+    deleteBlog={deleteBlog}
+    addLike={mockLike}/>
   )
 
   const botUser = userEvent.setup()

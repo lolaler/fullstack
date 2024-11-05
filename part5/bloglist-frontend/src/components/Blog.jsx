@@ -7,7 +7,7 @@ const Blog = ({ blog, user, toggleBlogVisibility, isVisible, deleteBlog, addLike
     marginBottom: 5
   }
 
-  const blogWithUser = blog.user.length === 0 ? {...blog, user: [{username: 'unknown user'}]} : blog
+  const blogWithUser = blog.user.length === 0 ? { ...blog, user: [{ username: 'unknown user' }] } : blog
 
   return (
     <div style={blogStyle}>
